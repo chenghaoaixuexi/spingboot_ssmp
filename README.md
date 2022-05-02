@@ -1,0 +1,2 @@
+# spingboot_ssmp
+用springboot快速构建一个ssmp增删改查的案例，restful风格

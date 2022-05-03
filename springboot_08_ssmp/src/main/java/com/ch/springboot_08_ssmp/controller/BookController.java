@@ -8,6 +8,7 @@ import com.ch.springboot_08_ssmp.service.impl.BookServieImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,8 +41,15 @@ public class BookController {
     }
     //增加书籍
     @PostMapping
-    public R add(@RequestBody Book book){
-       return new R(bookService.save(book));
+    public R add(@RequestBody Book book) throws IOException {
+
+        //模拟异常
+        if (book.getName().equals("123"))
+        throw new IOException();
+        boolean flag = bookService.save(book);
+
+        //三木
+        return new R(flag,flag ? "添加成功^_^" : "添加失败-.-");
     }
 
     //按照id修改书籍

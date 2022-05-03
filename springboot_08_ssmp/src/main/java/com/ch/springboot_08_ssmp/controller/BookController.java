@@ -1,6 +1,7 @@
 package com.ch.springboot_08_ssmp.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ch.springboot_08_ssmp.controller.util.R;
 import com.ch.springboot_08_ssmp.doman.Book;
 import com.ch.springboot_08_ssmp.service.IBookService;
 import com.ch.springboot_08_ssmp.service.impl.BookServieImpl;
@@ -11,7 +12,7 @@ import java.util.List;
 
 /**
  * @author chenghao
- * @purpose：
+ * @purpose：消息一致性的处理
  * @备注：
  * @data 2022年04月28日 17:26
  */
@@ -23,36 +24,36 @@ public class BookController {
     IBookService bookService;
     //查询全部
     @GetMapping
-    public List<Book> getAll(){
-        return  bookService.list();
+    public R getAll(){
+       return new R(true,bookService.list());
     }
     //根据ID查
     @GetMapping("{id}")
-    public Book getBookById(@PathVariable Integer id){
-        return bookService.getById(id);
+    public R getBookById(@PathVariable Integer id){
+        return new R(true,bookService.getById(id));
     }
     //分页查
     @GetMapping("{currentPage}/{pageSize}")
-    public IPage<Book> getIpages(@PathVariable Integer currentPage,@PathVariable Integer pageSize){
-        IPage<Book> ipages = bookService.getIpages(currentPage, pageSize);
-        return ipages;
+    public R getIpages(@PathVariable Integer currentPage,@PathVariable Integer pageSize){
+         return new R(true,bookService.getIpages(currentPage, pageSize));
+
     }
     //增加书籍
     @PostMapping
-    public boolean add(@RequestBody Book book){
-       return bookService.save(book);
+    public R add(@RequestBody Book book){
+       return new R(bookService.save(book));
     }
 
     //按照id修改书籍
     @PutMapping
-    public boolean update(@RequestBody Book book){
-        return bookService.updateById(book);
+    public R update(@RequestBody Book book){
+        return new R(bookService.updateById(book));
     }
 
     //删除书籍
     @DeleteMapping("{id}")
-    public boolean deleteById(@PathVariable Integer id){
-        return bookService.removeById(id);
+    public R deleteById(@PathVariable Integer id){
+        return new R(bookService.removeById(id));
     }
 
 

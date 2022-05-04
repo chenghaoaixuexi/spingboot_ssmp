@@ -36,7 +36,12 @@ public class BookController {
     //分页查
     @GetMapping("{currentPage}/{pageSize}")
     public R getIpages(@PathVariable Integer currentPage,@PathVariable Integer pageSize){
-         return new R(true,bookService.getIpages(currentPage, pageSize));
+        IPage<Book> page = bookService.getPage(currentPage, pageSize);
+        //当前页码值大于总页码值，将当前页码值等于最大页码值，然后重新查询
+        if (currentPage > page.getPages()){
+           page = bookService.getPage((int)page.getPages(), pageSize);
+        }
+        return new R(true,page);
 
     }
     //增加书籍

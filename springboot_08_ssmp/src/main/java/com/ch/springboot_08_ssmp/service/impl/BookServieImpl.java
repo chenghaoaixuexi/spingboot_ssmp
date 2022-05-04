@@ -22,9 +22,9 @@ public class BookServieImpl extends ServiceImpl<BookDao, Book> implements IBookS
 
 
     @Override
-    public IPage<Book> getIpages(Integer currentPage, Integer pageSize) {
-        IPage<Book> iPage = new Page<Book>();
-        IPage<Book> iPage1 = bookDao.selectPage(iPage, null);
-        return iPage;
+    public IPage<Book> getPage(int currentPage, int pageSize) {
+        IPage page = new Page(currentPage,pageSize);
+        bookDao.selectPage(page,null);
+        return page;
     }
 }
